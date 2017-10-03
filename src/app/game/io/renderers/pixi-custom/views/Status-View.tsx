@@ -12,15 +12,11 @@ export class Status extends React.Component<any, any> {
     }
 
     render() {
-        
-        const fps = Math.round(1000/this.props.deltaTime).toString();
-        const nBunnies = this.props.bunnies.length;
-
-        
         return <Text 
             onAdded={(pixiText:PIXI.Text) => this.textWidth = pixiText.width}
             x={!this.state ? 0 : this.props.stageWidth - this.state.textWidth}
-            text={`${fps} FPS w/ ${nBunnies.toString()} Bunnies`} style={{fill: 0xFF00FF}}
+            text={this.props.text} 
+            style={{fill: 0xFF00FF}}
         />
     }
 }

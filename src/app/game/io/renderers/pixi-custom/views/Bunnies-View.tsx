@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import {Text, Container, Sprite} from "react-pixi-renderer";
-import {Bunny} from "../../../world/bunnies/Bunnies-Data";
+import {Bunny} from "../../../../world/bunnies/Bunnies-Data";
 
 export const Bunnies = ({texture, bunnies}) => 
 (

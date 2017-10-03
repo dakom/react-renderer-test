@@ -1,4 +1,4 @@
-import {RendererType} from "../../game/renderer/Renderer";
+import {RendererType} from "../../game/io/RendererType";
 
 export const startMenu = (forceStart):Promise<RendererType> => 
     new Promise<RendererType>(resolve => {

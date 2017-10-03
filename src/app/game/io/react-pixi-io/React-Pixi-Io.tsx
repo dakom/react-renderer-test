@@ -1,27 +1,27 @@
+import * as PIXI from 'pixi.js';
+import * as React from 'react';
 
-import * as PIXI from "pixi.js";
-import * as React from "react";
-import {WorldState} from "../world/World-State";
+import { IoDynamics } from '../../io/IoDynamics';
+import { WorldState } from '../../world/World-State';
+import { GetInitialWorldState } from '../../world/World-State';
+import { UpdateWorld } from '../../world/World-Updater';
+import { getNow } from '../Time';
+
 
 interface IoState {
     worldState: WorldState;
 }
 
-export interface IoDynamics {
-    isTouching:boolean;
-    tick?:number;
-    deltaTime?:number;
-    stageWidth?:number;
-    stageHeight?:number;
-}
-
 //Grabs all current Input/Output values and passes them down on frame ticks (if not busy with a previous render)
 //A WorldUpdater must be supplied and checked all the way here at the top - otherwise the renderer has no way of knowing when its finished
 //It's written as a Higher Order Component so it can wrap around a React View
-export const withReactPixiIo = (worldUpdater) => (initialWorldState) => (app:PIXI.Application) => (World) =>
+export const getIoRoot = (app: PIXI.Application) => WorldView =>
     class extends React.PureComponent<void, IoState> {
         private renderCompleted: boolean = false;
-        private dynamics:IoDynamics;
+        private dynamics: IoDynamics;
+        private firstUpdate: boolean = true;
+        private firstRepaint: boolean = true;
+        private firstRender: boolean = true;
 
         constructor(props) {
             super(props);
@@ -31,7 +31,7 @@ export const withReactPixiIo = (worldUpdater) => (initialWorldState) => (app:PIX
             }
 
             this.state = {
-                worldState: initialWorldState
+                worldState: GetInitialWorldState()
             };
 
             this.updateSize = this.updateSize.bind(this);
@@ -43,25 +43,26 @@ export const withReactPixiIo = (worldUpdater) => (initialWorldState) => (app:PIX
             //Time
             const renderFrame = (frameNow) => {
                 if (this.renderCompleted) {
-                    
+                    const now = getNow(frameNow);
                     this.renderCompleted = false;
 
-                    this.dynamics.deltaTime = this.dynamics.tick ? frameNow - this.dynamics.tick : 0;
-                    this.dynamics.tick = frameNow;
-                    
+                    this.dynamics.deltaTime = this.dynamics.tick ? now - this.dynamics.tick : 0;
+                    this.dynamics.tick = now;
+
                     //merge io dynamics into old world
                     const worldState = Object.assign({}, {
                         ioDynamics: this.dynamics
                     }, this.state.worldState);
 
+                    
                     //update world
-                    worldUpdater (worldState)
+                    UpdateWorld(worldState)
                         .then(newWorld => {
                             this.setState({
                                 worldState: newWorld
                             });
                         })
-                    
+
                 }
                 requestAnimationFrame(renderFrame);
             }
@@ -80,17 +81,27 @@ export const withReactPixiIo = (worldUpdater) => (initialWorldState) => (app:PIX
             window.onresize = evt => this.updateSize();
             this.updateSize();
 
+            console.log("did mount!");
+
             //initial paint
-            this.repaint();
+            this.repaint("mount");
         }
 
         componentDidUpdate() {
-            this.repaint();
+            if (this.firstUpdate) {
+                console.log(`first update!`);
+                this.firstUpdate = false;
+            }
+            this.repaint("update");
         }
 
         /* Utilities */
 
-        repaint() {
+        repaint(source?: string) {
+            if (this.firstRepaint) {
+                console.log(`first repaint! [via ${source}]`);
+                this.firstRepaint = false;
+            }
             this.renderCompleted = true;
             app.render();
         }
@@ -98,14 +109,19 @@ export const withReactPixiIo = (worldUpdater) => (initialWorldState) => (app:PIX
         updateSize() {
             this.dynamics.stageWidth = window.innerWidth;
             this.dynamics.stageHeight = window.innerHeight;
-            
+
             app.view.setAttribute('width', window.innerWidth.toString());
             app.view.setAttribute('height', window.innerHeight.toString());
-            app.renderer.resize(window.innerWidth,window.innerHeight);
+            app.renderer.resize(window.innerWidth, window.innerHeight);
         }
 
         /* Render tree */
         render() {
-            return <World {...this.state.worldState} />
+            if (this.firstRender) {
+                console.log("first render!");
+                this.firstRender = false;
+            }
+
+            return <WorldView {...this.state.worldState} app={app} />
         }
     }
