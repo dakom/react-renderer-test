@@ -28,3 +28,13 @@ canvas {
 #desc {
     padding-left: 10px;
 }
+
+#status {
+    font-family: sans-serif;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #ff00ff;
+    text-align: right;
+    font-size: x-large;
+}

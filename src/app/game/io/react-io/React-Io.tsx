@@ -1,4 +1,3 @@
-import * as PIXI from 'pixi.js';
 import * as React from 'react';
 
 import { IoDynamics } from '../../io/IoDynamics';
@@ -15,7 +14,7 @@ interface IoState {
 //Grabs all current Input/Output values and passes them down on frame ticks (if not busy with a previous render)
 //A WorldUpdater must be supplied and checked all the way here at the top - otherwise the renderer has no way of knowing when its finished
 //It's written as a Higher Order Component so it can wrap around a React View
-export const getIoRoot = (app: PIXI.Application) => WorldView =>
+export const getIoRoot = onResize => isTouching => onRender => WorldView =>
     class extends React.PureComponent<void, IoState> {
         private renderCompleted: boolean = false;
         private dynamics: IoDynamics;
@@ -48,6 +47,7 @@ export const getIoRoot = (app: PIXI.Application) => WorldView =>
 
                     this.dynamics.deltaTime = this.dynamics.tick ? now - this.dynamics.tick : 0;
                     this.dynamics.tick = now;
+                    this.dynamics.isTouching = isTouching();
 
                     //merge io dynamics into old world
                     const worldState = Object.assign({}, {
@@ -67,15 +67,6 @@ export const getIoRoot = (app: PIXI.Application) => WorldView =>
                 requestAnimationFrame(renderFrame);
             }
             requestAnimationFrame(renderFrame);
-
-            //Input
-            app.renderer.plugins.interaction.on('pointerdown', () => {
-                console.log("Spawning bunnies!!");
-                this.dynamics.isTouching = true;
-            });
-            app.renderer.plugins.interaction.on('pointerup', () => {
-                this.dynamics.isTouching = false;
-            });
 
             //Display
             window.onresize = evt => this.updateSize();
@@ -103,16 +94,16 @@ export const getIoRoot = (app: PIXI.Application) => WorldView =>
                 this.firstRepaint = false;
             }
             this.renderCompleted = true;
-            app.render();
+            onRender();
         }
 
         updateSize() {
             this.dynamics.stageWidth = window.innerWidth;
             this.dynamics.stageHeight = window.innerHeight;
 
-            app.view.setAttribute('width', window.innerWidth.toString());
-            app.view.setAttribute('height', window.innerHeight.toString());
-            app.renderer.resize(window.innerWidth, window.innerHeight);
+            onResize();
+
+            
         }
 
         /* Render tree */
@@ -122,6 +113,6 @@ export const getIoRoot = (app: PIXI.Application) => WorldView =>
                 this.firstRender = false;
             }
 
-            return <WorldView {...this.state.worldState} app={app} />
+            return <WorldView {...this.state.worldState} />
         }
     }

@@ -23,6 +23,7 @@ class BunnyComponent extends React.Component<BunnyProp, any> {
     }
 
     render() {
+        this._sprite.texture = this.props.texture;
         this._sprite.x = this.props.x;
         this._sprite.y = this.props.y;
 

@@ -1,10 +1,5 @@
 import * as React from "react";
-import {WorldState} from "../../../../world/World-State";
-interface StatusProps extends WorldState {
-    container:PIXI.Container;
-    text:string;
-    stageWidth:number;
-}
+
 
 export class Status extends React.Component<any, any> {
     private statusElement:HTMLDivElement;
