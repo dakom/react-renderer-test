@@ -36,22 +36,22 @@ Of course a custom renderer is still awesome for enabling a clearer architecture
     <h2>React-Empty-Edges</h2>
     <p/>
     Custom renderer with empty nodes (simple featureless js objects)
-    This version renders out the final edges (as empty objects)
+    <br/>This version renders out the final edges (as empty objects)
     
     <h2>React-Empty-Null</h2>
     <p/>
     Custom renderer with empty nodes (simple featureless js objects)
-    This version renders null at the final edges
+    <br/>This version renders null at the final edges
 
     <h2>React-Pixi-Custom</h2> 
     <p/>
     A custom React renderer using native PIXI classes.
-    Tenders elements all the way down, and elements are PIXI objects
+    <br/>Renders elements all the way down, and elements are PIXI objects
     
     <h2>React-Pixi-Dom</h2>
     <p/>
     Using standard ReactDOM by via Higher Order Components
-    Renders null at the edges
+    <br/>Renders null at the edges
     
     
     `
