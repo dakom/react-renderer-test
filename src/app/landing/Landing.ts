@@ -27,6 +27,7 @@ This is rather surprising, since one would think a custom renderer would make a 
   <p/>
 Of course a custom renderer is still awesome for enabling a clearer architecture, it just isn't a performance gain.
     <p/>Source is available at <a href="https://github.com/dakom/react-renderer-test">https://github.com/dakom/react-renderer-test</a>
+    <p/>Pixi-Custom source is at <a href="https://github.com/dakom/react-pixi-renderer">https://github.com/dakom/react-pixi-renderer</a>
 <hr/>
     <h2>Baseline-Pixi</h2>
     <p/>
@@ -44,11 +45,13 @@ Of course a custom renderer is still awesome for enabling a clearer architecture
 
     <h2>React-Pixi-Custom</h2> 
     <p/>
-    A custom React renderer using native PIXI classes. <p/>Available at <a href="https://github.com/dakom/react-pixi-renderer">react-pixi-renderer</a>
+    A custom React renderer using native PIXI classes.
+    Tenders elements all the way down, and elements are PIXI objects
     
     <h2>React-Pixi-Dom</h2>
     <p/>
-    Using standard ReactDOM by via Higher Order Components and rendering null at the edges
+    Using standard ReactDOM by via Higher Order Components
+    Renders null at the edges
     
     
     `
