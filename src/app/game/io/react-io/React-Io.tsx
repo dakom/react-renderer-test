@@ -15,7 +15,7 @@ interface IoState {
 //A WorldUpdater must be supplied and checked all the way here at the top - otherwise the renderer has no way of knowing when its finished
 //It's written as a Higher Order Component so it can wrap around a React View
 export const getIoRoot = onResize => isTouching => onRender => WorldView =>
-    class extends React.PureComponent<void, IoState> {
+    class extends React.PureComponent<any, IoState> {
         private renderCompleted: boolean = false;
         private dynamics: IoDynamics;
         private firstUpdate: boolean = true;
@@ -113,6 +113,6 @@ export const getIoRoot = onResize => isTouching => onRender => WorldView =>
                 this.firstRender = false;
             }
 
-            return <WorldView {...this.state.worldState} />
+            return <WorldView {...this.state.worldState} {...this.props} />
         }
     }

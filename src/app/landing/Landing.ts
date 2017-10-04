@@ -5,16 +5,43 @@ export const startLanding = (forceStart?) => {
 
     descElement.innerHTML = 
     `
-    Choose any of the above options to start the test, and refresh the page to come back here
+    Choose any of the above options to start the test, and refresh the page to come back here.
+    <br/>Click/hold on the canvas to add bunnies (lots of bunnies!)
+<p/>
+    Performance results are roughly:
+    <p/>
+    <ul style="list-style: decimal">
+        <li>Baseline-Pixi</li>
+        <li>React-Empty-Null === React-Pixi-Dom</li>
+        <li>React-Empty-Edges === React-Pixi-Custom</li>
+    </ul>
+<p/>
+This is rather surprising, since one would think a custom renderer would make a larger difference.
+<p/>In other words, bottleneck issues are in order of importance
+<p/>
+<ul style="list-style: decimal">
+<li>React vs. straight/imperative (big difference)</li>
+<li>Rendering null at the edges vs. rendering final elements (very significant difference)</li>
+<li>Leveraging ReactDOM vs. custom renderer (negligible difference)</li>
+</ul>
+  <p/>
+Of course a custom renderer is still awesome for enabling a clearer architecture, it just isn't a performance gain.
+    
 <hr/>
     <h2>Baseline-Pixi</h2>
     <p/>
     Non-React. Imperative straight PIXI code.
 
-    <h2>React-Empty</h2>
+    <h2>React-Empty-Edges</h2>
     <p/>
     Custom renderer with empty nodes (simple featureless js objects)
+    This version renders out the final edges (as empty objects)
     
+    <h2>React-Empty-Null</h2>
+    <p/>
+    Custom renderer with empty nodes (simple featureless js objects)
+    This version renders null at the final edges
+
     <h2>React-Pixi-Custom</h2> 
     <p/>
     A custom React renderer using native PIXI classes. <p/>Available at <a href="https://github.com/dakom/react-pixi-renderer">react-pixi-renderer</a>
@@ -23,9 +50,6 @@ export const startLanding = (forceStart?) => {
     <p/>
     Using standard ReactDOM by via Higher Order Components and rendering null at the edges
     
-    <h2>ReactWebGl</h2>
-    <p/>
-    (TODO)
     
     `
 

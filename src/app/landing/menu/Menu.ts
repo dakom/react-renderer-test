@@ -6,6 +6,7 @@ export const startMenu = (forceStart):Promise<RendererType> =>
         Object
         .keys(RendererType)
         .map(key => RendererType[key])
+        .filter(key => key !== RendererType.REACT_WEBGL_CUSTOM)
         .forEach(option => {
             const li = document.createElement('li');
             const button = document.createElement('button');        

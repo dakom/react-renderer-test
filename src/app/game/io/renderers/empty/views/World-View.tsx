@@ -5,13 +5,17 @@ import {Status} from "./Status-View";
 import {WorldState} from "../../../../world/World-State";
 import {getStatus} from "../../../../strings/StatusStrings";
 
-export const WorldView = (props:WorldState) => 
+interface Props extends WorldState {
+    renderEdges:boolean;
+}
+
+export const WorldView = (props:Props) => 
     <Empty>
         {
             (!props.texture) 
             ?   <Empty text={(props.texture) ? "ready!" :  "loading..."} style={{fill: 0xFF00FF}} />
             :   <Empty>
-                    <Bunnies texture={props.texture} bunnies={props.bunnies} /> 
+                    <Bunnies texture={props.texture} bunnies={props.bunnies} renderEdges={props.renderEdges}/> 
                     <Status text={getStatus(props)}  />
                 </Empty>
         }

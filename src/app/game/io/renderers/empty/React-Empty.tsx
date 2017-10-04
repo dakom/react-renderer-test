@@ -6,7 +6,7 @@ import {getResizer, getTouchDetector, getRenderer} from "../../webgl-io/WebGl-Io
 import {Instance, MakeInstance} from "./lib/elements/Elements";
 import {ReactEmpty} from "./lib/LibMain";
 
-export const startReactEmpty = (ctx) => {
+export const startReactEmpty = ctx => renderEdges => {
     const Root = MakeInstance();
 
     const resizer = getResizer(ctx);
@@ -15,7 +15,6 @@ export const startReactEmpty = (ctx) => {
 
 
     const ComponentView = getIoRoot (resizer) (touchDetector) (renderer) (WorldView);
-
     
-    ReactEmpty.render(<ComponentView />, Root, () => console.log("render completed!"));
+    ReactEmpty.render(<ComponentView renderEdges={renderEdges} />, Root, () => console.log("render completed!"));
 }
