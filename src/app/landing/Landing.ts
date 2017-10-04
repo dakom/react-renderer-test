@@ -26,7 +26,7 @@ This is rather surprising, since one would think a custom renderer would make a 
 </ul>
   <p/>
 Of course a custom renderer is still awesome for enabling a clearer architecture, it just isn't a performance gain.
-    
+    <p/>Source is available at <a href="https://github.com/dakom/react-renderer-test">https://github.com/dakom/react-renderer-test</a>
 <hr/>
     <h2>Baseline-Pixi</h2>
     <p/>
