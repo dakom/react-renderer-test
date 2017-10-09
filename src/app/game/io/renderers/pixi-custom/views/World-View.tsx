@@ -11,7 +11,7 @@ export const WorldView = (props:WorldState) =>
             (!props.texture) 
             ?   <Text text={(props.texture) ? "ready!" :  "loading..."} style={{fill: 0xFF00FF}} />
             :   <Container>
-                    <Bunnies texture={props.texture} bunnies={props.bunnies} /> 
+                    <Bunnies texture={props.texture} bunnies={props.bunnies} cheat={props.cheat} /> 
                     <Status text={getStatus(props)} stageWidth={props.ioDynamics.stageWidth} />
                 </Container>
         }

@@ -6,7 +6,7 @@ import { getIoRoot } from '../../react-io/React-Io';
 import {WorldView} from "./views/World-View"
 import {getResizer, getTouchDetector, getRenderer} from "../../pixi-io/Pixi-Io";
 
-export const startPixiDOM = (app:PIXI.Application) => {
+export const startPixiDOM = (app:PIXI.Application) => (cheat:boolean) => {
     const resizer = getResizer(app);
     const touchDetector = getTouchDetector(app);
     const renderer = getRenderer(app);

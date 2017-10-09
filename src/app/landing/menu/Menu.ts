@@ -1,12 +1,13 @@
 import {RendererType} from "../../game/io/RendererType";
 
+
 export const startMenu = (forceStart):Promise<RendererType> => 
     new Promise<RendererType>(resolve => {
         const menuUl = document.getElementById("menu");
         Object
         .keys(RendererType)
+        .sort()
         .map(key => RendererType[key])
-        .filter(key => key !== RendererType.REACT_WEBGL_CUSTOM)
         .forEach(option => {
             const li = document.createElement('li');
             const button = document.createElement('button');        

@@ -6,7 +6,7 @@ import { GetInitialWorldState } from "../../../world/World-State";
 import {createWorldView } from "./views/World-View";
 import {getNow} from "../../Time";
 
-export const startPixiBaseline = (app: PIXI.Application) => {
+export const startPixiBaseline = (app: PIXI.Application) => (cheat:boolean) => {
    const updateWorldView = createWorldView (app.stage);
 
     const dynamics: IoDynamics = {

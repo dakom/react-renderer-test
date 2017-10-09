@@ -14,14 +14,16 @@ const rendererMap = {
     [RendererType.REACT_EMPTY_NULL_EDGES]: startReactEmpty,
     [RendererType.REACT_PIXI_CUSTOM]: startPixiCustom,
     [RendererType.REACT_PIXI_DOM]: startPixiDOM,
-    [RendererType.REACT_WEBGL_CUSTOM]: startWebGlCustom,
+    [RendererType.REACT_PIXI_CUSTOM_CHEAT]: startPixiCustom,
+    //[RendererType.REACT_WEBGL_CUSTOM]: startWebGlCustom,
 }
 
+//startLanding(RendererType.REACT_PIXI_CUSTOM_CHEAT)
 startLanding()
     .then((rendererType: RendererType) => {
         const canvas = document.getElementById("canvas") as HTMLCanvasElement;
         switch(rendererType) {
-            case RendererType.REACT_WEBGL_CUSTOM:
+            //case RendererType.REACT_WEBGL_CUSTOM:
             case RendererType.REACT_EMPTY_WITH_EDGES:
             case RendererType.REACT_EMPTY_NULL_EDGES:
                 const ctx = (canvas.getContext("webgl") as WebGLRenderingContext)  || (canvas.getContext("experimental-webgl") as WebGLRenderingContext);
@@ -42,7 +44,7 @@ startLanding()
                     autoStart: false,
                 });
 
-                rendererMap[rendererType](app);
+                rendererMap[rendererType](app) (rendererType === RendererType.REACT_PIXI_CUSTOM_CHEAT);
 
                 break;
         }

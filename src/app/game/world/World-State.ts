@@ -9,7 +9,7 @@ export interface WorldState {
     fps:string;
     texture?:PIXI.Texture;
     ioDynamics?:IoDynamics;
-    
+    cheat?:boolean;
 }
 
 export const GetInitialWorldState = ():WorldState => ({
